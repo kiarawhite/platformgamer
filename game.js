@@ -14,10 +14,7 @@ window.addEventListener("keyup", event =>{
 function loop() {
 
   if (keyPressed["ArrowUp"]){
-    hero.moveUp()
-  }
-  if (keyPressed["ArrowDown"]){
-    hero.moveDown()
+    hero.jump()
   }
 
   if (keyPressed["ArrowRight"]){
@@ -27,6 +24,8 @@ function loop() {
   if (keyPressed["ArrowLeft"]){
     hero.moveLeft()
   }
+
+  hero.step()
   
   ERASE()
  shapes.forEach(s=> s.draw())
@@ -36,12 +35,3 @@ function loop() {
   setTimeout(loop, 1000/60)
 }
 loop()
-
-
-
-
-
-
-
-
-

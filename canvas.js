@@ -11,3 +11,5 @@ function ERASE(){
 CTX.fillStyle = "hotpink"
 CTX.fillRect(0, 0, CANVAS.width, CANVAS.height)
 }
+
+let GRIDSIZE = CANVAS.height / 12

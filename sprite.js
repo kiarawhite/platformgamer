@@ -10,7 +10,7 @@ class Sprite{
 	}
 	draw(x, y, width, height){
 		if (this.loaded) {
-			CTX.drawImage(this.image, x-width/2, y-width/2, width, height)
+			CTX.drawImage(this.image, x, y, width, height)
 		}
 	
 	}
