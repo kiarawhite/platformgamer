@@ -1,37 +1,47 @@
-let hero = new Hero()
-let shapes = []
-let keyPressed = {}
-ERASE()
-  hero.draw()
+class Game {
 
-// setup a function to run whenever a key is pressed
-window.addEventListener("keydown", event => {
-  keyPressed[event.code] = true
-})
-window.addEventListener("keyup", event =>{
-  keyPressed[event.code] = false
-})
-function loop() {
+  constructor() {
+    // state
+    this.hero = new Hero()
+    this.platforms = []
+    this.keyPressed = {}
 
-  if (keyPressed["ArrowUp"]){
-    hero.jump()
+
+    // setup a function to run whenever a key is pressed
+    window.addEventListener("keydown", event => {
+    this.keyPressed[event.code] = true
+    })
+      window.addEventListener("keyup", event =>{
+      this.keyPressed[event.code] = false
+      })
+    
+    this.platforms.push(new Platform(GRIDSIZE, GRIDSIZE*8, GRIDSIZE *3, GRIDSIZE))
+    this.loop()
+
   }
-
-  if (keyPressed["ArrowRight"]){
-    hero.moveRight()
-  }
-
-  if (keyPressed["ArrowLeft"]){
-    hero.moveLeft()
-  }
-
-  hero.step()
   
-  ERASE()
- shapes.forEach(s=> s.draw())
 
-  hero.draw()
+  loop() {
 
-  setTimeout(loop, 1000/60)
+    if (this.keyPressed["ArrowUp"]){
+      this.hero.jump()
+    }
+
+    if (this.keyPressed["ArrowRight"]){
+      this.hero.moveRight()
+    }
+
+    if (this.keyPressed["ArrowLeft"]){
+      this.hero.moveLeft()
+    }
+
+    this.hero.step(this.platforms)
+    
+    ERASE()
+    this.platforms.forEach(p => p.draw())
+    this.hero.draw()
+    setTimeout(() => this.loop(), 1000/60)
+  }
 }
-loop()
+
+new Game()

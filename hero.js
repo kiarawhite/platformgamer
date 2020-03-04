@@ -1,6 +1,6 @@
 
-let heroStand = new Sprite("images/heros/yellow/alienYellow_stand.png")
-let heroJump = new Sprite("images/heros/yellow/alienYellow_jump.png")
+let heroStand = new Sprite("images/alienYellow_stand.png")
+let heroJump = new Sprite("images/alienYellow_jump.png")
 
 class Hero{
 	constructor(){
@@ -19,7 +19,7 @@ jump() {
 			return
 		}
 
-	this.dy = - GRIDSIZE / 2.2
+	this.dy = - GRIDSIZE / 1.9
 	this.airborne = true
 }
 
@@ -29,16 +29,33 @@ jump() {
 	moveRight(){
 		this.x = this.x + GRIDSIZE / 10
 	}
-	step() {
+	step(platforms) {
 		//accelerate falling speed
 
-		this.dy = this.dy + GRIDSIZE / 80
+		this.dy = this.dy + GRIDSIZE / 70
 
 		if (this.dy > GRIDSIZE) {
 			this.dy = GRIDSIZE - 1
-	}
+		}
+
+		console.log(this.dy)
 
 		//apply speed to position
+		platforms.forEach(p => {
+			let isInsideY = this.y > p.y && this.y < p.y + p.height
+			let isInsideX = this.x > p.x && this.x < p.x + p.width
+			let isFalling = this.dy > 0
+
+			//check if hero can land on platform
+			if (isFalling){
+				if (isInsideX && isInsideY) {
+					this.y = p.y
+					this.dy = 0
+					this.airborne - false
+				}
+			}
+		})
+		//check if hero is on the ground
 		this.y = this.y + this.dy
 		if (this.y > CANVAS.height) {
 			this.y = CANVAS.height
